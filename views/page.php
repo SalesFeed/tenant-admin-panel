@@ -68,12 +68,14 @@ $loopt = $jobs->isRunning($job);
       </div>
       <div class="tablewrap">
         <table>
-          <thead><tr><th>Account</th><th>Stand</th><th>Schema</th><th class="num">Grootte</th><th>Sessies vanaf</th><th>Laatste taak</th></tr></thead>
+          <thead><tr><th>Account</th><th>Stand</th><th class="num">version</th><th class="num">migrating</th><th>Schema</th><th class="num">Grootte</th><th>Sessies vanaf</th><th>Laatste taak</th></tr></thead>
           <tbody id="rijen">
           <?php foreach ($accounts as $id => $a): ?>
             <tr data-state="<?= $a['state'] ?>" data-zoek="<?= h(strtolower($id . ' ' . $a['companyname'] . ' ' . $a['aid'])) ?>"<?= $id === $gekozen ? ' aria-selected="true"' : '' ?>>
               <td><a href="?account=<?= $id ?>" class="name"><?= $id ?> · <?= h($a['companyname']) ?></a><div class="sub"><?= h($a['aid']) ?><?= $a['active'] ? '' : ' · niet actief' ?></div></td>
               <td><?= pill($a['state'], $standen) ?></td>
+              <td class="num"><?= (int) $a['version'] ?></td>
+              <td class="num"><?= (int) $a['migrating'] ?></td>
               <td><?= $a['dbname'] ? '<code>' . h($a['dbname']) . '</code><div class="sub">' . h($a['server']) . '</div>' : '<span class="sub">–</span>' ?></td>
               <td class="num"><?= $a['dbname'] ? mb($a['size']) : '<span class="sub">–</span>' ?></td>
               <td class="num"><?= $a['copysince'] ? datum($a['copysince']) : '<span class="sub">–</span>' ?></td>
