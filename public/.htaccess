@@ -1,7 +1,22 @@
-# Het beheerpanel is alleen bereikbaar vanaf de adressen hieronder; dezelfde als
+# Het beheerpanel is alleen bereikbaar vanaf de adressen hieronder én met een
+# gebruiker uit het wachtwoordbestand. De adressen zijn dezelfde als die van
 # api-dev en observium op 13 oktober 2026, maar een eigen lijst voor deze site.
 # 213.10.128.35 is het uitgaande adres van de werkplek (sinds 11 september 2026).
 #
-# Werkt alleen als de vhost voor public/ AllowOverride AuthConfig (of All) zet.
+# Gebruikers zet je met bcrypt in het bestand, op een van de nodes:
+#   htpasswd -B /var/www/shared/apache/htpasswd/tenant-admin <naam>
+# (de eerste keer met -c erbij). Apache geeft de naam door als REMOTE_USER; het
+# panel zet die bij elke taak.
+#
+# Basic Auth stuurt het wachtwoord bij elk verzoek mee: de vhost serveert het
+# panel alleen over HTTPS. Werkt alleen als die vhost voor public/
+# AllowOverride AuthConfig (of All) zet.
 
-Require ip 145.131.206.33 213.10.128.35
+AuthType Basic
+AuthName "Tenants"
+AuthUserFile /var/www/shared/apache/htpasswd/tenant-admin
+
+<RequireAll>
+    Require ip 145.131.206.33 213.10.128.35
+    Require valid-user
+</RequireAll>
