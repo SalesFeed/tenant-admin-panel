@@ -1,7 +1,7 @@
 <?php
 
 // De stand van de accounts voor het panel: de actieve accounts uit tracker, met
-// hun schema uit shared.dbschema en de grootte daarvan. $central is de
+// hun schema uit shared.tenantconfig en de grootte daarvan. $central is de
 // gebruiker v2 (tracker en shared), $admin de gebruiker v2admin (de schema's).
 
 class Tenants {
@@ -11,7 +11,7 @@ class Tenants {
     1 => array('Opbouw controleren', 'schema/structure.sql moet overeenkomen met sf_3123, anders stopt de verhuizing.'),
     2 => array('Pauze', 'migrating = 1. Tracking krijgt een leeg antwoord, de rest van de API 503.'),
     3 => array('Wachten op de archiver', 'Tot het account in tracker geen LIVE-recordings meer heeft. Meestal binnen een uur.'),
-    4 => array('Halve kopie weggooien', 'Schema, MySQL-gebruiker en de rij in shared.dbschema.'),
+    4 => array('Halve kopie weggooien', 'Schema, MySQL-gebruiker en de rij in shared.tenantconfig.'),
     5 => array('Schema aanmaken', 'Opbouw uit schema/structure.sql.'),
     6 => array('Kopiëren', 'Configuratie en parties volledig, sessies van het laatste jaar.'),
     7 => array('Omzetten', 'version = 2 en migrating = 0. Vanaf dan gaat het account naar v2.'),
@@ -31,7 +31,7 @@ class Tenants {
       'SELECT a.id, a.aid, a.companyname, a.active, a.migrating, a.version,
               s.dbname, s.copysince, s.copystartedon, d.name AS server
        FROM tracker.account a
-       LEFT JOIN shared.dbschema s ON s.account_id = a.id
+       LEFT JOIN shared.tenantconfig s ON s.account_id = a.id
        LEFT JOIN shared.dbserver d ON d.id = s.dbserver_id
        WHERE a.active = 1 OR s.account_id IS NOT NULL
        ORDER BY a.id'
