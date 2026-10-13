@@ -1,0 +1,7 @@
+# Het beheerpanel is alleen bereikbaar vanaf de adressen hieronder; dezelfde als
+# api-dev en observium op 13 oktober 2026, maar een eigen lijst voor deze site.
+# 213.10.128.35 is het uitgaande adres van de werkplek (sinds 11 september 2026).
+#
+# Werkt alleen als de vhost voor public/ AllowOverride AuthConfig (of All) zet.
+
+Require ip 145.131.206.33 213.10.128.35
