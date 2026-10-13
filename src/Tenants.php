@@ -14,7 +14,8 @@ class Tenants {
     4 => array('Halve kopie weggooien', 'Schema, MySQL-gebruiker en de rij in shared.tenantconfig.'),
     5 => array('Schema aanmaken', 'Opbouw uit schema/structure.sql.'),
     6 => array('Kopiëren', 'Configuratie en parties volledig, sessies van het laatste jaar.'),
-    7 => array('Omzetten', 'version = 2 en migrating = 0. Vanaf dan gaat het account naar v2.'),
+    7 => array('Map aanmaken', '/var/www/shared/tenants/<id>/, met de CRM-uploads en de conditie-pdf\'s erin. LeadCRM werkt via een symlink door.'),
+    8 => array('Omzetten', 'version = 2 en migrating = 0. Vanaf dan gaat het account naar v2.'),
   );
 
   private $central;
@@ -78,7 +79,7 @@ class Tenants {
   public static function stepInLog($log) {
     $stap = 0;
     foreach (explode("\n", $log) as $regel) {
-      if (preg_match('/^\d\d:\d\d:\d\d  ([1-7]) /', $regel, $m)) $stap = max($stap, (int) $m[1]);
+      if (preg_match('/^\d\d:\d\d:\d\d  ([1-8]) /', $regel, $m)) $stap = max($stap, (int) $m[1]);
     }
     return $stap;
   }
