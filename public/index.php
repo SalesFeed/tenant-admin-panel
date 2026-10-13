@@ -56,7 +56,7 @@ function start($config, $accounts, $latest, $jobs) {
   $account = $accounts[(int) $id];
   $job = isset($latest[(int) $id]) ? $latest[(int) $id] : null;
   if ($jobs->isRunning($job)) return 'Voor dit account loopt al een taak.';
-  if ($account['live']) return 'Dit account staat live.';
+  if ($account['version'] == 2) return 'Dit account draait op v2.';
   if ($actie === 'verhuizen' && !$config['verhuizen']) return $config['verhuizen_uit'];
   if ($actie === 'weggooien' && !$account['dbname']) return 'Dit account heeft geen schema.';
 
@@ -92,7 +92,7 @@ foreach ($accounts as $id => $a) {
 $account = $accounts[$gekozen];
 $job = isset($latest[$gekozen]) ? $latest[$gekozen] : null;
 $log = $job ? $jobs->log($job['id']) : '';
-$liveRecordings = $account['live'] ? null : $tenants->liveRecordings($gekozen);
+$liveRecordings = $account['version'] == 2 ? null : $tenants->liveRecordings($gekozen);
 
 $perServer = array();
 foreach ($accounts as $a) {

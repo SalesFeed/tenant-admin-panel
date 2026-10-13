@@ -110,7 +110,7 @@ $loopt = $jobs->isRunning($job);
         <div class="note danger">Dit account staat op pauze (migrating = 1) zonder lopende taak. Tracking krijgt een leeg antwoord tot migrating weer 0 is.</div>
         <?php endif ?>
 
-        <?php if ($account['live']): ?>
+        <?php if ($account['version'] == 2): ?>
         <div class="note info">Dit account draait op v2. Terugzetten zit niet in het panel: wat na de omzetting in v2 is geschreven, staat niet in tracker.</div>
         <?php else: ?>
         <div><h3>Verhuizen</h3></div>

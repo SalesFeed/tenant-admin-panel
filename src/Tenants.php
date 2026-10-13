@@ -14,7 +14,7 @@ class Tenants {
     4 => array('Halve kopie weggooien', 'Schema, MySQL-gebruiker en de rij in shared.dbschema.'),
     5 => array('Schema aanmaken', 'Opbouw uit schema/structure.sql.'),
     6 => array('Kopiëren', 'Configuratie en parties volledig, sessies van het laatste jaar.'),
-    7 => array('Omzetten', 'live = 1, daarna migrating = 0. Vanaf dan gaat het account naar v2.'),
+    7 => array('Omzetten', 'version = 2 en migrating = 0. Vanaf dan gaat het account naar v2.'),
   );
 
   private $central;
@@ -28,8 +28,8 @@ class Tenants {
   // Elk actief account, en elk account met een schema, op id.
   public function accounts() {
     $rows = $this->central->query(
-      'SELECT a.id, a.aid, a.companyname, a.active, a.migrating,
-              s.dbname, s.live, s.copysince, s.copystartedon, d.name AS server
+      'SELECT a.id, a.aid, a.companyname, a.active, a.migrating, a.version,
+              s.dbname, s.copysince, s.copystartedon, d.name AS server
        FROM tracker.account a
        LEFT JOIN shared.dbschema s ON s.account_id = a.id
        LEFT JOIN shared.dbserver d ON d.id = s.dbserver_id
@@ -43,9 +43,9 @@ class Tenants {
     return $rows;
   }
 
-  // De stand van een account: live, pauze, bezig, half of tracker.
+  // De stand van een account: live (op v2), pauze, bezig, half of tracker.
   public static function state(array $account, $job) {
-    if ($account['live']) return 'live';
+    if ($account['version'] == 2) return 'live';
     if ($account['migrating']) return 'pauze';
     if ($job && in_array($job['status'], array('wacht', 'bezig'), true)) return 'bezig';
     if ($account['dbname']) return 'half';
