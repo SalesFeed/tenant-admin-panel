@@ -1,6 +1,6 @@
 /* Werkpaneel: links de accounts als tabel, rechts het gekozen account met zijn draaiboek; daaronder de taken. */
 :root {
-  --bg: #f3f5f4; --surface: #ffffff; --sunken: #eaeeec; --line: #d6dcd9; --fg: #16201b; --muted: #5a6761;
+  --bg: #f3f5f4; --surface: #ffffff; --sunken: #eaeeec; --line: #d6dcd9; --fg: #16201b; --muted: #5a6761; --stip-uit: #3f4844;
   --accent: #2d47a8; --accent-soft: #e4e9fb;
   --tracker: #5a6761; --tracker-bg: #e6eae8;
   --half: #8a5a00; --half-bg: #fbefd5;
@@ -15,7 +15,7 @@
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) { :root {
-  --bg: #121715; --surface: #1a201d; --sunken: #151a18; --line: #2c3531; --fg: #e3e9e6; --muted: #98a59f;
+  --bg: #121715; --surface: #1a201d; --sunken: #151a18; --line: #2c3531; --fg: #e3e9e6; --muted: #98a59f; --stip-uit: #5d6763;
   --accent: #8ea3f2; --accent-soft: #232c4d;
   --tracker: #a3afaa; --tracker-bg: #262e2b; --half: #e6b65c; --half-bg: #3a2e14; --pauze: #f2a06c; --pauze-bg: #3d2617;
   --bezig: #8ea3f2; --bezig-bg: #232c4d; --live: #6fd39b; --live-bg: #183626; --danger: #f08a82; --danger-bg: #3d1d1b;
@@ -39,6 +39,11 @@ header.top p { margin: 2px 0 0; color: var(--muted); }
 .server .k { color: var(--muted); font-size: 12px; }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--live); display: inline-block; margin-right: 6px; }
 .dot.uit { background: var(--danger); }
+.stipkolom { text-align: center; }
+.stip { width: 9px; height: 9px; border-radius: 50%; display: inline-block; vertical-align: middle; }
+.stip.aan { background: var(--live); }
+.stip.uit { background: var(--stip-uit); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--muted); }
 .legend b { color: var(--fg); font-weight: 600; }
